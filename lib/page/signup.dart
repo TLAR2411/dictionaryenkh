@@ -9,8 +9,6 @@ class Signup extends StatelessWidget {
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
