@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'package:dictionaryenkh/page/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 class Signup extends StatelessWidget {
   Signup({super.key});
@@ -9,7 +11,19 @@ class Signup extends StatelessWidget {
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
 
-  
+  Future<void> singup() async {
+    final String name = _userNameController.text;
+    final String email = _emailController.text;
+    final String password = _passwordController.text;
+    http.Response response = await http.post(
+      Uri.parse('https://nubbdictapi.kode4u.tech/api/auth/signup'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'name': name, 'email': email, 'password': password}),
+    );
+
+    print(response.body);
+    print(response.statusCode);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +95,7 @@ class Signup extends StatelessWidget {
                 ),
                 child: TextField(
                   controller: _emailController,
-                  obscureText: true, // 🔥 hide password
+                  // Text: true,obscure // 🔥 hide password
                   decoration: InputDecoration(
                     hintText: "Enter email",
                     hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
@@ -135,7 +149,9 @@ class Signup extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    await singup();
+                  },
                   child: const Text(
                     "Sign Up",
                     style: TextStyle(fontSize: 18, color: Colors.white),
