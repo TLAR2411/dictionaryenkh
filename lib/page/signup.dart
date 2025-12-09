@@ -4,12 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-class Signup extends StatelessWidget {
+class Signup extends StatefulWidget {
   Signup({super.key});
 
+  @override
+  State<Signup> createState() => _SignupState();
+}
+
+class _SignupState extends State<Signup> {
   TextEditingController _userNameController = TextEditingController();
+
   TextEditingController _passwordController = TextEditingController();
+
   TextEditingController _emailController = TextEditingController();
+
+  bool _obscureText = true;
 
   Future<void> singup() async {
     final String name = _userNameController.text;
@@ -21,25 +30,38 @@ class Signup extends StatelessWidget {
       body: jsonEncode({'name': name, 'email': email, 'password': password}),
     );
 
-    print(response.body);
-    print(response.statusCode);
+    // print(response.body);
+    // print(response.statusCode);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.all(24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 5),
               Text(
                 "Create Account",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
               ),
 
-              SizedBox(height: 25),
+              SizedBox(height: 5),
+
+              Text(
+                "Singup to get started",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: const Color.fromARGB(255, 138, 138, 138),
+                  letterSpacing: 2,
+                ),
+              ),
+
+              SizedBox(height: 55),
 
               // Username label
               const Text(
@@ -126,10 +148,21 @@ class Signup extends StatelessWidget {
                     ),
                   ],
                 ),
+
                 child: TextField(
                   controller: _passwordController,
-                  obscureText: true, // 🔥 hide password
+                  obscureText: _obscureText,
                   decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _obscureText = !_obscureText; // 🔥 Toggle
+                        });
+                      },
+                      icon: Icon(
+                        _obscureText ? Icons.visibility_off : Icons.visibility,
+                      ),
+                    ),
                     hintText: "Enter password",
                     hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
                     border: OutlineInputBorder(borderSide: BorderSide.none),

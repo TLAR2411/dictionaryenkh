@@ -3,18 +3,29 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:get/get.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   const Login({super.key});
 
   @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+
+  bool _obscureText = true;
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.all(24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 5),
               Text(
                 "Welcome Back!!",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
@@ -31,7 +42,7 @@ class Login extends StatelessWidget {
                 ),
               ),
 
-              SizedBox(height: 45),
+              SizedBox(height: 55),
 
               // Username label
               const Text(
@@ -85,8 +96,19 @@ class Login extends StatelessWidget {
                   ],
                 ),
                 child: TextField(
-                  obscureText: true, // 🔥 hide password
+                  controller: _passwordController,
+                  obscureText: _obscureText,
                   decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _obscureText = !_obscureText; // 🔥 Toggle
+                        });
+                      },
+                      icon: Icon(
+                        _obscureText ? Icons.visibility_off : Icons.visibility,
+                      ),
+                    ),
                     hintText: "Enter password",
                     hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
                     border: OutlineInputBorder(borderSide: BorderSide.none),
@@ -120,7 +142,7 @@ class Login extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Already have an account?",
+                    "Don't have a account?",
                     style: TextStyle(fontSize: 17, color: Colors.grey),
                   ),
 
