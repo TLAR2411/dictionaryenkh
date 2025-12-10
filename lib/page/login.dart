@@ -1,11 +1,17 @@
+import 'dart:convert';
+
+import 'package:dictionaryenkh/controller/auth_controller.dart';
+import 'package:dictionaryenkh/page/home.dart';
+import 'package:dictionaryenkh/page/plan.dart';
 import 'package:dictionaryenkh/page/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 class Login extends StatefulWidget {
-  const Login({super.key});
-
+  Login({super.key});
+  final AuthController authController = Get.find<AuthController>();
   @override
   State<Login> createState() => _LoginState();
 }
@@ -13,6 +19,23 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+
+  Future<void> login() async {
+    final String email = _emailController.text;
+    final String password = _passwordController.text;
+    http.Response response = await http.post(
+      Uri.parse(
+        'https://young-scene-5d7b.g12.workers.dev/https://nubbdictapi.kode4u.tech/api/auth/login',
+      ),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'email': email, 'password': password}),
+    );
+
+    final data = jsonDecode(response.body);
+    widget.authController.saveToken(data['token']);
+    print(data);
+    Get.to(Plan());
+  }
 
   bool _obscureText = true;
   @override
@@ -46,7 +69,7 @@ class _LoginState extends State<Login> {
 
               // Username label
               const Text(
-                "Username",
+                "Email",
                 style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
@@ -65,8 +88,9 @@ class _LoginState extends State<Login> {
                   ],
                 ),
                 child: TextField(
+                  controller: _emailController,
                   decoration: InputDecoration(
-                    hintText: "Enter username",
+                    hintText: "Enter email",
                     hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
                     border: OutlineInputBorder(borderSide: BorderSide.none),
                   ),
@@ -128,7 +152,7 @@ class _LoginState extends State<Login> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: login,
                   child: const Text(
                     "Sign In",
                     style: TextStyle(fontSize: 18, color: Colors.white),

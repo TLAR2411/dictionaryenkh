@@ -25,13 +25,17 @@ class _SignupState extends State<Signup> {
     final String email = _emailController.text;
     final String password = _passwordController.text;
     http.Response response = await http.post(
-      Uri.parse('https://nubbdictapi.kode4u.tech/api/auth/signup'),
+      Uri.parse(
+        'https://young-scene-5d7b.g12.workers.dev/https://nubbdictapi.kode4u.tech/api/auth/signup',
+      ),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'name': name, 'email': email, 'password': password}),
     );
 
-    // print(response.body);
-    // print(response.statusCode);
+    print(response.body);
+    print(response.statusCode);
+
+    Get.off(Login());
   }
 
   @override

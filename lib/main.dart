@@ -1,5 +1,6 @@
 import 'package:dictionaryenkh/controller/auth_controller.dart';
 import 'package:dictionaryenkh/page/login.dart';
+import 'package:dictionaryenkh/page/plan.dart';
 import 'package:dictionaryenkh/page/signup.dart';
 import 'package:dictionaryenkh/page/splash.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:get_storage/get_storage.dart';
 
 void main() async {
   await GetStorage.init();
+
   Get.put(AuthController());
   runApp(DevicePreview(builder: (context) => MyApp()));
 }
@@ -24,6 +26,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/', page: () => Splash()),
         GetPage(name: '/login', page: () => Login()),
         GetPage(name: '/signup', page: () => Signup()),
+        GetPage(name: '/plan', page: () => Plan()),
       ],
 
       home: Splash(),

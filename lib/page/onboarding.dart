@@ -17,19 +17,21 @@ class _OnboardingState extends State<Onboarding> {
   final List<OnboardingItem> _items = [
     OnboardingItem(
       description:
-          'Explore the newest fashion trends and find your unique style',
+          'Believe in your potential and imagine goals that go beyond your current limits',
       image: 'assets/images/intro1.jpg',
-      title: 'Discover Latest Trends',
+      title: 'Dream Big',
     ),
     OnboardingItem(
-      description: 'Shop premium quality products from top brands worldwide',
+      description:
+          'Focus, practice, and give your best effort to learn and improve every day',
       image: 'assets/images/intro2.jpg',
-      title: 'Quality Product',
+      title: 'Study Hard',
     ),
     OnboardingItem(
-      description: 'Simple and secure shopping experience at your fingertips',
+      description:
+          'Use your skills and confidence to stand out and inspire others with your success.',
       image: 'assets/images/intro3.jpg',
-      title: 'Easy Shopping',
+      title: 'Shine Bright',
     ),
   ];
 
