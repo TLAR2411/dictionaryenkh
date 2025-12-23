@@ -34,6 +34,9 @@ class _LoginState extends State<Login> {
     final data = jsonDecode(response.body);
     widget.authController.saveToken(data['token']);
     print(data);
+
+    widget.authController.getUser();
+
     Get.to(Plan());
   }
 

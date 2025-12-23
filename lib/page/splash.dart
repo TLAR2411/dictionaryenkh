@@ -1,4 +1,5 @@
 import 'package:dictionaryenkh/controller/auth_controller.dart';
+import 'package:dictionaryenkh/page/home.dart';
 import 'package:dictionaryenkh/page/login.dart';
 import 'package:dictionaryenkh/page/onboarding.dart';
 import 'package:flutter/material.dart';
@@ -13,15 +14,29 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
   @override
-  void initState() {
-    super.initState();
-    Future.delayed(const Duration(milliseconds: 2500), () {
-      if (widget.authController.isFirstTime) {
+  Future goPage() async {
+    // Get.off(Splash());
+    Future.delayed(const Duration(seconds: 2), () {
+      final token = widget.authController.getToken(); // ALWAYS valid
+
+      print("TOKEN: $token");
+      // print(token.isNotEmpty);
+
+      if (token.toString() != '') {
+        print("True");
+        // Get.toNamed('/home');
+        Get.off(Home());
+      } else if (widget.authController.isFirstTime) {
         Get.off(Onboarding());
       } else {
         Get.off(Login());
       }
     });
+  }
+
+  void initState() {
+    super.initState();
+    goPage();
   }
 
   @override

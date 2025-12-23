@@ -16,17 +16,19 @@ class AuthController extends GetxController {
 
   RxString token = ''.obs;
 
+  RxMap userData = {}.obs;
+
   @override
   void onInit() {
     super.onInit();
 
     _loadInitialState();
-    token.value = _storage.read('token') ?? '';
   }
 
   void _loadInitialState() {
     _isFirstTime.value = _storage.read('isFirstTime') ?? true;
     _isLoggedIn.value = _storage.read('isLoggedIn') ?? false;
+    token.value = _storage.read('token') ?? '';
   }
 
   void setFirstTimeDone() {
@@ -66,7 +68,8 @@ class AuthController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      _storage.write('user', jsonDecode(response.body));
+      _storage.write('user', jsonDecode(response.body)['user']);
+      // print("user: ${_storage.read('user')}");
     }
   }
 }

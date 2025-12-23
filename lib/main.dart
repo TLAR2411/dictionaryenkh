@@ -1,4 +1,5 @@
 import 'package:dictionaryenkh/controller/auth_controller.dart';
+import 'package:dictionaryenkh/page/home.dart';
 import 'package:dictionaryenkh/page/login.dart';
 import 'package:dictionaryenkh/page/plan.dart';
 import 'package:dictionaryenkh/page/signup.dart';
@@ -13,12 +14,13 @@ void main() async {
 
   Get.put(AuthController());
   runApp(DevicePreview(builder: (context) => MyApp()));
+  // runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  AuthController authController = Get.find<AuthController>();
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -27,6 +29,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/login', page: () => Login()),
         GetPage(name: '/signup', page: () => Signup()),
         GetPage(name: '/plan', page: () => Plan()),
+        GetPage(name: '/home', page: () => Home()),
       ],
 
       home: Splash(),
